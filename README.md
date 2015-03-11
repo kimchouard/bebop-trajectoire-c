@@ -1,13 +1,11 @@
-# bebop-trajectoire-c
+# INSA OT Robots - Parrot Beboop
 Projet INSA de Lyon dans le cadre de l'OT Robot pour un suivie de trajectoire du Parrot Bebop, codé en C.
 
-# Getting started
+## Getting started
 
-Afin de tester si votre environement est apte à compiler, vous 
+1. Pour pouvoir compiler l'application, il faut d'abord compliler le SDK disponible [ici](https://github.com/ARDroneSDK3/ARSDKBuildUtils). Les instruction sont dans l'[INSTALL](https://github.com/ARDroneSDK3/Docs/blob/master/Installation/INSTALL), section HOST (UNIX) BUILDS.
+2. Une fois chose faite, copiez le dossier `include` disponible dans `<SDK>/ARBuildUtils/Targets/Unix/Install/` dans le dossier de votre repo github.
+3. Executer un simple `make`, et vous voilà avec l'exécutable `BebopDroneTrajectoire`.
 
 
-$ANDROID_NDK_PATH/build/tools/make-standalone-toolchain.sh --platform=android-14 --arch=arm --install-dir=toolchain_arm
-
-$ANDROID_NDK_PATH/build/tools/make-standalone-toolchain.sh --platform=android-14 --arch=mips --install-dir=toolchain_mipsel
-
-$ANDROID_NDK_PATH/build/tools/make-standalone-toolchain.sh --platform=android-14 --arch=x86 --install-dir=toolchain_x86
+ 
