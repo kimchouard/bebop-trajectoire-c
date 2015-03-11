@@ -29,4 +29,5 @@
 *.hex
 
 # Librairy executables
-lib/*
+includes/*
+obj/*
