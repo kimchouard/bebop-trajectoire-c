@@ -1,6 +1,6 @@
-EXEC_NAME=BebopDroneReceiveStream #output filename
+EXEC_NAME=BebopDroneTrajectoire #output filename
 
-SDK_DIR=../../../SDK/ARSDKBuildUtils
+SDK_DIR=../SDK/ARSDKBuildUtils
 IDIR=./
 CC=gcc
 CFLAGS=-I$(IDIR) -I $(SDK_DIR)/Targets/Unix/Install/include
@@ -11,10 +11,10 @@ LDIR = $(SDK_DIR)/Targets/Unix/Install/lib
 LIBS=-L$(SDK_DIR)/Targets/Unix/Install/lib -larsal -larcommands -larnetwork -larnetworkal -lardiscovery -larstream
 LIBS_DBG=-L$(SDK_DIR)/Targets/Unix/Install/lib -larsal_dbg -larcommands_dbg -larnetwork_dbg -larnetworkal_dbg -lardiscovery_dbg -larstream_dbg
 
-_DEPS = BebopDroneReceiveStream.h
+_DEPS = main.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = BebopDroneReceiveStream.o
+_OBJ = main.o
 OBJ = $(patsubst %,$(OBJDIR)/%,$(_OBJ))
 
 FIFO = video_fifo
