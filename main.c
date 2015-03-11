@@ -46,13 +46,13 @@
 #include <unistd.h>
 #include <signal.h>
 
-#include <includes/libARSAL/ARSAL.h>
-#include <includes/libARSAL/ARSAL_Print.h>
-#include <includes/libARNetwork/ARNetwork.h>
-#include <includes/libARNetworkAL/ARNetworkAL.h>
-#include <includes/libARCommands/ARCommands.h>
-#include <includes/libARDiscovery/ARDiscovery.h>
-#include <includes/libARStream/ARStream.h>
+#include <libARSAL/ARSAL.h>
+#include <libARSAL/ARSAL_Print.h>
+#include <libARNetwork/ARNetwork.h>
+#include <libARNetworkAL/ARNetworkAL.h>
+#include <libARCommands/ARCommands.h>
+#include <libARDiscovery/ARDiscovery.h>
+#include <libARStream/ARStream.h>
 
 #include "main.h"
 

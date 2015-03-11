@@ -1,6 +1,6 @@
 EXEC_NAME=BebopDroneTrajectoire #output filename
 
-SDK_DIR=../SDK/ARSDKBuildUtils
+SDK_DIR=./ARSDKBuildUtils
 IDIR=./
 CC=gcc
 CFLAGS=-I$(IDIR) -I $(SDK_DIR)/Targets/Unix/Install/include
