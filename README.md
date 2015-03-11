@@ -7,5 +7,5 @@ Projet INSA de Lyon dans le cadre de l'OT Robot pour un suivie de trajectoire du
 2. Une fois chose faite, copiez le dossier `include` disponible dans `<SDK>/ARBuildUtils/Targets/Unix/Install/` dans le dossier de votre repo github.
 3. Executer un simple `make`, et vous voilà avec l'exécutable `BebopDroneTrajectoire`.
 
-
+**N.B.**: La documentation est disponible sur [ce repository](https://github.com/ARDroneSDK3/Docs/tree/master/SDK/Unix).
  
