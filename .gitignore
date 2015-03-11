@@ -28,6 +28,7 @@
 *.x86_64
 *.hex
 
-# Librairy executables
+# Librairy and compiled files
 includes/*
 obj/*
+BebopDroneTrajectoire
