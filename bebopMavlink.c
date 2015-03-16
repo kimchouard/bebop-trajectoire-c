@@ -4,7 +4,7 @@
 
 #include <libARSAL/ARSAL.h>
 #include <libARSAL/ARSAL_Print.h>
-#include <libARMAVLINK/libARMavlink.h>
+#include <libARMavlink/libARMavlink.h>
 
 #include "bebopMavlink.h"
 

@@ -8,7 +8,7 @@ CFLAGS=-I$(IDIR) -I $(SDK_DIR)/Targets/Unix/Install/include
 OBJDIR=obj
 LDIR = $(SDK_DIR)/Targets/Unix/Install/lib
 
-LIBS=-L$(SDK_DIR)/Targets/Unix/Install/lib -larsal -larcommands -larnetwork -larnetworkal -lardiscovery -larstream
+LIBS=-L$(SDK_DIR)/Targets/Unix/Install/lib -larsal -larcommands -larnetwork -larnetworkal -lardiscovery -larstream -larmavlink
 LIBS_DBG=-L$(SDK_DIR)/Targets/Unix/Install/lib -larsal_dbg -larcommands_dbg -larnetwork_dbg -larnetworkal_dbg -lardiscovery_dbg -larstream_dbg
 
 _DEPS = bebopMavlink.h main.h
