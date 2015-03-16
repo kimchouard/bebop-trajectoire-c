@@ -32,3 +32,6 @@
 ARSDKBuildUtils/*
 obj/*
 BebopDroneTrajectoire
+
+# MavLink files
+*.mv
