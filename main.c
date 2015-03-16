@@ -55,6 +55,7 @@
 #include <libARStream/ARStream.h>
 
 #include "main.h"
+#include "bebopMavlink.h"
 
 /*****************************************
  *
@@ -252,164 +253,166 @@ void *readerRun (void* data)
 int main (int argc, char *argv[])
 {
     /* local declarations */
-    int failed = 0;
-    BD_MANAGER_t *deviceManager = malloc(sizeof(BD_MANAGER_t));
+    // int failed = 0;
+    // BD_MANAGER_t *deviceManager = malloc(sizeof(BD_MANAGER_t));
 
-    pid_t child = 0;
+    // pid_t child = 0;
 
-    ARSAL_PRINT(ARSAL_PRINT_INFO, TAG, "-- Bebop Drone Receive Video Stream --");
+    // ARSAL_PRINT(ARSAL_PRINT_INFO, TAG, "-- Bebop Drone Receive Video Stream --");
     
-    // fork the process to launch ffplay
-    if ((child = fork()) == 0)
-    {
-        execlp("mplayer", "mplayer", "video_fifo", NULL);
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, TAG, "Missing mplayer, you will not see the video. Please install mplayer.");
-        return -1;
-    }
+    // // fork the process to launch ffplay
+    // if ((child = fork()) == 0)
+    // {
+    //     execlp("mplayer", "mplayer", "video_fifo", NULL);
+    //     ARSAL_PRINT(ARSAL_PRINT_ERROR, TAG, "Missing mplayer, you will not see the video. Please install mplayer.");
+    //     return -1;
+    // }
     
-    ARSAL_PRINT (ARSAL_PRINT_INFO, TAG, "-- Starting --");
+    // ARSAL_PRINT (ARSAL_PRINT_INFO, TAG, "-- Starting --");
 
-    if (deviceManager != NULL)
-    {
-        // initialize jsMnager
-        deviceManager->alManager = NULL;
-        deviceManager->netManager = NULL;
-        deviceManager->streamReader = NULL;
-        deviceManager->rxThread = NULL;
-        deviceManager->txThread = NULL;
-        deviceManager->videoRxThread = NULL;
-        deviceManager->videoTxThread = NULL;
-        deviceManager->d2cPort = BD_D2C_PORT;
-        deviceManager->c2dPort = BD_C2D_PORT; //deviceManager->c2dPort = 0; // Should be read from json
-        deviceManager->arstreamAckDelay = 0; // Should be read from json
-        deviceManager->arstreamFragSize = BD_NET_DC_VIDEO_FRAG_SIZE; // Should be read from json
-        deviceManager->arstreamFragNb   = BD_NET_DC_VIDEO_MAX_NUMBER_OF_FRAG; // Should be read from json
-        deviceManager->video_out = fopen("./video_fifo", "w");
-        deviceManager->run = 1;
-    }
-    else
-    {
-        failed = 1;
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, TAG, "deviceManager alloc error !");
-    }
+    // if (deviceManager != NULL)
+    // {
+    //     // initialize jsMnager
+    //     deviceManager->alManager = NULL;
+    //     deviceManager->netManager = NULL;
+    //     deviceManager->streamReader = NULL;
+    //     deviceManager->rxThread = NULL;
+    //     deviceManager->txThread = NULL;
+    //     deviceManager->videoRxThread = NULL;
+    //     deviceManager->videoTxThread = NULL;
+    //     deviceManager->d2cPort = BD_D2C_PORT;
+    //     deviceManager->c2dPort = BD_C2D_PORT; //deviceManager->c2dPort = 0; // Should be read from json
+    //     deviceManager->arstreamAckDelay = 0; // Should be read from json
+    //     deviceManager->arstreamFragSize = BD_NET_DC_VIDEO_FRAG_SIZE; // Should be read from json
+    //     deviceManager->arstreamFragNb   = BD_NET_DC_VIDEO_MAX_NUMBER_OF_FRAG; // Should be read from json
+    //     deviceManager->video_out = fopen("./video_fifo", "w");
+    //     deviceManager->run = 1;
+    // }
+    // else
+    // {
+    //     failed = 1;
+    //     ARSAL_PRINT(ARSAL_PRINT_ERROR, TAG, "deviceManager alloc error !");
+    // }
 
-    if (!failed)
-    {
-        failed = ardiscoveryConnect (deviceManager);
-    }
+    // if (!failed)
+    // {
+    //     failed = ardiscoveryConnect (deviceManager);
+    // }
 
-    if (!failed)
-    {
-        ARSTREAM_Reader_InitStreamDataBuffer (&d2cParams[2], BD_NET_DC_VIDEO_DATA_ID, deviceManager->arstreamFragSize, deviceManager->arstreamFragNb);
-        ARSTREAM_Reader_InitStreamAckBuffer (&c2dParams[3], BD_NET_CD_VIDEO_ACK_ID);
-    }
+    // if (!failed)
+    // {
+    //     ARSTREAM_Reader_InitStreamDataBuffer (&d2cParams[2], BD_NET_DC_VIDEO_DATA_ID, deviceManager->arstreamFragSize, deviceManager->arstreamFragNb);
+    //     ARSTREAM_Reader_InitStreamAckBuffer (&c2dParams[3], BD_NET_CD_VIDEO_ACK_ID);
+    // }
 
-    if (!failed)
-    {
-        /* start */
-        failed = startNetwork (deviceManager);
-    }
+    // if (!failed)
+    // {
+    //     /* start */
+    //     failed = startNetwork (deviceManager);
+    // }
 
-    if (!failed)
-    {
-        failed = startVideo (deviceManager);
-    }
+    // if (!failed)
+    // {
+    //     failed = startVideo (deviceManager);
+    // }
 
-    if (!failed)
-    {
-        int cmdSend = 0;
+    // if (!failed)
+    // {
+    //     int cmdSend = 0;
 
-        cmdSend = sendBeginStream(deviceManager);
-    }
+    //     cmdSend = sendBeginStream(deviceManager);
+    // }
 
-    if (!failed)
-    {
-        // allocate reader thread array.
-        deviceManager->readerThreads = calloc(numOfCommandBufferIds, sizeof(ARSAL_Thread_t));
+    // if (!failed)
+    // {
+    //     // allocate reader thread array.
+    //     deviceManager->readerThreads = calloc(numOfCommandBufferIds, sizeof(ARSAL_Thread_t));
         
-        if (deviceManager->readerThreads == NULL)
-        {
-            ARSAL_PRINT(ARSAL_PRINT_ERROR, TAG, "Allocation of reader threads failed.");
-            failed = 1;
-        }
-    }
+    //     if (deviceManager->readerThreads == NULL)
+    //     {
+    //         ARSAL_PRINT(ARSAL_PRINT_ERROR, TAG, "Allocation of reader threads failed.");
+    //         failed = 1;
+    //     }
+    // }
     
-    if (!failed)
-    {
-        // allocate reader thread data array.
-        deviceManager->readerThreadsData = calloc(numOfCommandBufferIds, sizeof(READER_THREAD_DATA_t));
+    // if (!failed)
+    // {
+    //     // allocate reader thread data array.
+    //     deviceManager->readerThreadsData = calloc(numOfCommandBufferIds, sizeof(READER_THREAD_DATA_t));
         
-        if (deviceManager->readerThreadsData == NULL)
-        {
-            ARSAL_PRINT(ARSAL_PRINT_ERROR, TAG, "Allocation of reader threads data failed.");
-            failed = 1;
-        }
-    }
+    //     if (deviceManager->readerThreadsData == NULL)
+    //     {
+    //         ARSAL_PRINT(ARSAL_PRINT_ERROR, TAG, "Allocation of reader threads data failed.");
+    //         failed = 1;
+    //     }
+    // }
     
-    if (!failed)
-    {
-        // Create and start reader threads.
-        int readerThreadIndex = 0;
-        for (readerThreadIndex = 0 ; readerThreadIndex < numOfCommandBufferIds ; readerThreadIndex++)
-        {
-            // initialize reader thread data
-            deviceManager->readerThreadsData[readerThreadIndex].deviceManager = deviceManager;
-            deviceManager->readerThreadsData[readerThreadIndex].readerBufferId = commandBufferIds[readerThreadIndex];
+    // if (!failed)
+    // {
+    //     // Create and start reader threads.
+    //     int readerThreadIndex = 0;
+    //     for (readerThreadIndex = 0 ; readerThreadIndex < numOfCommandBufferIds ; readerThreadIndex++)
+    //     {
+    //         // initialize reader thread data
+    //         deviceManager->readerThreadsData[readerThreadIndex].deviceManager = deviceManager;
+    //         deviceManager->readerThreadsData[readerThreadIndex].readerBufferId = commandBufferIds[readerThreadIndex];
             
-            if (ARSAL_Thread_Create(&(deviceManager->readerThreads[readerThreadIndex]), readerRun, &(deviceManager->readerThreadsData[readerThreadIndex])) != 0)
-            {
-                ARSAL_PRINT(ARSAL_PRINT_ERROR, TAG, "Creation of reader thread failed.");
-                failed = 1;
-            }
-        }
-    }
+    //         if (ARSAL_Thread_Create(&(deviceManager->readerThreads[readerThreadIndex]), readerRun, &(deviceManager->readerThreadsData[readerThreadIndex])) != 0)
+    //         {
+    //             ARSAL_PRINT(ARSAL_PRINT_ERROR, TAG, "Creation of reader thread failed.");
+    //             failed = 1;
+    //         }
+    //     }
+    // }
 
-    // Run for 2 minutes
-    sleep(120);
+    // // Run for 2 minutes
+    // sleep(120);
 
-    if (deviceManager != NULL)
-    {
-        deviceManager->run = 0; // break threads loops
+    // if (deviceManager != NULL)
+    // {
+    //     deviceManager->run = 0; // break threads loops
 
-        /* stop */
-        if (deviceManager->readerThreads != NULL)
-        {
-            // Stop reader Threads
-            int readerThreadIndex = 0;
-            for (readerThreadIndex = 0 ; readerThreadIndex < numOfCommandBufferIds ; readerThreadIndex++)
-            {
-                if (deviceManager->readerThreads[readerThreadIndex] != NULL)
-                {
-                    ARSAL_Thread_Join(deviceManager->readerThreads[readerThreadIndex], NULL);
-                    ARSAL_Thread_Destroy(&(deviceManager->readerThreads[readerThreadIndex]));
-                    deviceManager->readerThreads[readerThreadIndex] = NULL;
-                }
-            }
+    //     /* stop */
+    //     if (deviceManager->readerThreads != NULL)
+    //     {
+    //         // Stop reader Threads
+    //         int readerThreadIndex = 0;
+    //         for (readerThreadIndex = 0 ; readerThreadIndex < numOfCommandBufferIds ; readerThreadIndex++)
+    //         {
+    //             if (deviceManager->readerThreads[readerThreadIndex] != NULL)
+    //             {
+    //                 ARSAL_Thread_Join(deviceManager->readerThreads[readerThreadIndex], NULL);
+    //                 ARSAL_Thread_Destroy(&(deviceManager->readerThreads[readerThreadIndex]));
+    //                 deviceManager->readerThreads[readerThreadIndex] = NULL;
+    //             }
+    //         }
             
-            // free reader thread array
-            free (deviceManager->readerThreads);
-            deviceManager->readerThreads = NULL;
-        }
+    //         // free reader thread array
+    //         free (deviceManager->readerThreads);
+    //         deviceManager->readerThreads = NULL;
+    //     }
         
-        if (deviceManager->readerThreadsData != NULL)
-        {
-            // free reader thread data array
-            free (deviceManager->readerThreadsData);
-            deviceManager->readerThreadsData = NULL;
-        }
+    //     if (deviceManager->readerThreadsData != NULL)
+    //     {
+    //         // free reader thread data array
+    //         free (deviceManager->readerThreadsData);
+    //         deviceManager->readerThreadsData = NULL;
+    //     }
 
-        stopVideo (deviceManager);
-        stopNetwork (deviceManager);
-        fclose (deviceManager->video_out);
-        free (deviceManager);
-    }
+    //     stopVideo (deviceManager);
+    //     stopNetwork (deviceManager);
+    //     fclose (deviceManager->video_out);
+    //     free (deviceManager);
+    // }
 
-    ARSAL_PRINT(ARSAL_PRINT_INFO, TAG, "-- END --");
+    // ARSAL_PRINT(ARSAL_PRINT_INFO, TAG, "-- END --");
 
-    if (child > 0)
-    {
-        kill(child, SIGKILL);
-    }
+    // if (child > 0)
+    // {
+    //     kill(child, SIGKILL);
+    // }
+
+    testBebop();
 
     return 0;
 }
