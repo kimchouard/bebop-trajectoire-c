@@ -14,7 +14,7 @@ LIBS_DBG=-L$(SDK_DIR)/Targets/Unix/Install/lib -larsal_dbg -larcommands_dbg -lar
 _DEPS = bebopMavlink.h main.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = main.o bebopMavlink.o
+_OBJ = bebopMavlink.o main.o
 OBJ = $(patsubst %,$(OBJDIR)/%,$(_OBJ))
 
 FIFO = video_fifo

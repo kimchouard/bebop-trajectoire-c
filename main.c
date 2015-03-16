@@ -412,7 +412,7 @@ int main (int argc, char *argv[])
     //     kill(child, SIGKILL);
     // }
 
-    testBebop();
+    testMavlink();
 
     return 0;
 }
